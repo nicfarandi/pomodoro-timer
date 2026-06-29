@@ -37,6 +37,19 @@
           "icon": "./assets/icon.png",
           "color": "#F5A623"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraGradleProperties": {
+              "org.gradle.jvmargs": "-Xmx4096m -XX:MaxMetaspaceSize=512m"
+            },
+            "packagingOptions": {
+              "pickFirsts": []
+            }
+          }
+        }
       ]
     ],
     "experiments": {
