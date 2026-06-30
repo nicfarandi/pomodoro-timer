@@ -17,6 +17,7 @@ import { calcStreak } from '../../src/utils/streakCalc';
 import CatSvg from '../../src/components/cat/CatSvg';
 import CircularTimer from '../../src/components/timer/CircularTimer';
 import DurationPresets from '../../src/components/timer/DurationPresets';
+import DurationStepper from '../../src/components/timer/DurationStepper';
 import WeeklyReviewCard from '../../src/components/stats/WeeklyReviewCard';
 
 export default function TimerScreen() {
@@ -144,11 +145,17 @@ export default function TimerScreen() {
           onLongPress={handleLongPress}
         />
 
-        {/* Duration presets — only when idle */}
+        {/* Duration presets + custom stepper — only when idle */}
         <View style={styles.presetsWrap}>
           <DurationPresets
             selected={timerDurationMinutes}
             onSelect={setTimerDuration}
+            theme={theme}
+            disabled={isRunning || isPaused}
+          />
+          <DurationStepper
+            value={timerDurationMinutes}
+            onChange={setTimerDuration}
             theme={theme}
             disabled={isRunning || isPaused}
           />
@@ -231,6 +238,7 @@ const styles = StyleSheet.create({
   presetsWrap: {
     width: '100%',
     alignItems: 'center',
+    gap: 14,
   },
   todayXP: {
     fontSize: 12,

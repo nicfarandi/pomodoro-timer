@@ -3,7 +3,8 @@ import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
-import { StyleSheet } from 'react-native';
+import { NavigationBar } from 'expo-navigation-bar';
+import { StyleSheet, AppState, AppStateStatus, Platform } from 'react-native';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -18,6 +19,15 @@ Notifications.setNotificationHandler({
 export default function RootLayout() {
   useEffect(() => {
     Notifications.requestPermissionsAsync().catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') return;
+    NavigationBar.setHidden(true);
+    const sub = AppState.addEventListener('change', (nextState: AppStateStatus) => {
+      if (nextState === 'active') NavigationBar.setHidden(true);
+    });
+    return () => sub.remove();
   }, []);
 
   return (
